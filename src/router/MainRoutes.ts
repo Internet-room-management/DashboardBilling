@@ -6,10 +6,10 @@ const MainRoutes = {
     redirect: '/main',
     component: () => import('@/layouts/full/FullLayout.vue'),
     children: [
-        {
-            path: '/',
-            redirect: "/dashboards/analytical",
-        },
+        // {
+        //     path: '/',
+        //     redirect: "/dashboards/analytical",
+        // },
         {
             name: 'Analytical',
             path: '/dashboards/analytical',

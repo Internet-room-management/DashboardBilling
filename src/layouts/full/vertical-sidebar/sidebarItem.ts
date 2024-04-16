@@ -74,7 +74,7 @@ export interface menu {
   subCaption?: string;
 }
 
-const sidebarItem: menu[] = [
+const MenuItem: menu[] = [
   { header: 'Home' },
   {
     title: "Analytical",
@@ -569,4 +569,13 @@ const sidebarItem: menu[] = [
 
 ];
 
+const sidebarItemNet: menu[] = [
+  { header: 'MenuNet' },
+  {
+    title: "Dashboard",
+    icon: ChartPieIcon,
+    to: "/dashboards/MenuNet",
+  },
+];
+const sidebarItem: menu[] = import.meta.env.PROD ? [...sidebarItemNet] : [...sidebarItemNet , ...MenuItem];
 export default sidebarItem;

@@ -18,10 +18,10 @@ async function handleFileOpen() {
 function createWindow() {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
-              width: 650,
-      height: 430,
+              width: 1200,
+      height: 1080,
       icon: __dirname + '/icon.ico',
-      maximizable: false, // Vô hiệu hóa maximize
+    //   maximizable: false, // Vô hiệu hóa maximize
       webPreferences: {
         // preload: path.join(__dirname, 'preload.js'),
         nodeIntegration: true,

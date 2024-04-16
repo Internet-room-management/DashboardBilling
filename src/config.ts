@@ -18,7 +18,7 @@ const config: ConfigProps = {
     setRTLLayout: false, // RTL layout
     actTheme: 'ORANGE_THEME',
     inputBg: 'ORANGE_THEME',
-    boxed: true,
+    boxed: false, // full screen content
     setBorderCard: false
 };
 

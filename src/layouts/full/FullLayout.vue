@@ -63,7 +63,8 @@ const customizer = useCustomizerStore();
             <HorizontalSidebar v-if="customizer.setHorizontalLayout" />
 
             <v-main>
-                <v-container fluid class="page-wrapper pb-sm-15 pb-10">
+                <!-- pb-sm-15 pb-10 -->
+                <v-container fluid class="page-wrapper ">
                     <div :class="customizer.boxed ? 'maxWidth' : ''">
                         <RouterView />
                         <v-btn class="customizer-btn" size="large" icon variant="flat" color="primary"

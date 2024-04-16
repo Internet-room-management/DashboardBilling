@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainRoutes from './MainRoutes';
 import AuthRoutes from './AuthRoutes';
 import { useAuthStore } from '@/stores/auth';
+import MainMenuNet from './MainMenuNet';
 
 export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +14,8 @@ export const router = createRouter({
             component: () => import('@/views/authentication/SideLogin.vue')
         },
         MainRoutes,
-        AuthRoutes
+        AuthRoutes,
+        MainMenuNet
     ]
 });
 
