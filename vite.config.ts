@@ -19,7 +19,7 @@ export default defineConfig({
   },
   server: {
     hmr: {
-      overlay: true
+      overlay: false
     },
     watch: {
       ignored: ['node_modules/**'] // Loại trừ thư mục hoặc tệp không cần theo dõi

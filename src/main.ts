@@ -48,6 +48,18 @@ app.use(VueRecaptcha, {
 app.use(i18n);
 app.use(Maska);
 app.use(VueApexCharts);
+// socketio
+// app.use(new VueSocketIO({
+//     debug: true,
+//     connection: 'http://metinseylan.com:1992',
+//     vuex: {
+//         store,
+//         actionPrefix: 'SOCKET_',
+//         mutationPrefix: 'SOCKET_'
+//     },
+//     options: { path: "/my-app/" } //Optional options
+// }));
+
 app.use(vuetify).mount('#app');
 //ScrollTop Use
 // app.use(VueScrollTo);

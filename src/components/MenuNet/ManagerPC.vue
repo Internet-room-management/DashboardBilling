@@ -1,8 +1,29 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { projectTableData } from "@/_mockApis/components/dashboards/AnalyticalData";
+// import { socket, state  } from "@/socketIO";
 const select = ref("March");
 const items = ref(["March", "April", "May", "June"]);
+// console.log('socketIO', state.connected)
+
+import { io } from "socket.io-client";
+const socket = io(`http://localhost:18092`);
+console.log('socket', socket)
+socket.on('welcome', () => {
+  console.log('on welcome : welcome received renderer'); // displayed
+  socket.emit('test')
+});
+socket.on('error', (e) => {
+  console.log(e); // not displayed
+});
+socket.on('ok', () => {
+  console.log("OK received renderer"); // not displayed
+});
+socket.on('connect', () => {
+  console.log("connected renderer"); // displayed
+  socket.emit('test');
+});
+
 </script>
 <template>
     <VCard elevation="10">
@@ -23,7 +44,7 @@ const items = ref(["March", "April", "May", "June"]);
                             <th class="text-subtitle-1 font-weight-medium">Assigned</th>
                             <th class="text-subtitle-1 font-weight-medium">Name</th>
                             <th class="text-subtitle-1 font-weight-medium">Status</th>
-                            <th class="text-subtitle-1 font-weight-medium">Time Online</th>
+                            <th class="text-subtitle-1 font-weight-medium">Time Onlines</th>
                         </tr>
                     </thead>
                     <tbody>

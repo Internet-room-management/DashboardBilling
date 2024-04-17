@@ -6,6 +6,20 @@ import {
     dialog
 } from 'electron';
 
+// socket 
+const io = require('socket.io')();
+//@ts-ignore
+io.on('connection', (client) => {
+  io.emit('welcome');
+
+  client.on("test", () => {
+    console.log("received test"); // not displayed
+    io.emit("ok");
+  })
+});
+
+io.listen(18092);
+
 const isDev = process.env.npm_lifecycle_event === "dev" ? true : false;
 
 async function handleFileOpen() {
