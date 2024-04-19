@@ -4,25 +4,96 @@ import { projectTableData } from "@/_mockApis/components/dashboards/AnalyticalDa
 // import { socket, state  } from "@/socketIO";
 const select = ref("March");
 const items = ref(["March", "April", "May", "June"]);
-// console.log('socketIO', state.connected)
+// console.log('socketIO', state.connecte)
 
 import { io } from "socket.io-client";
-const socket = io(`http://localhost:18092`);
-console.log('socket', socket)
+const socket = io(`http://localhost:18092`,{
+					
+					transports: ["websocket"],
+				});
+
 socket.on('welcome', () => {
   console.log('on welcome : welcome received renderer'); // displayed
-  socket.emit('test')
+//   socket.emit('test')
 });
 socket.on('error', (e) => {
-  console.log(e); // not displayed
+  console.log('error', e); // not displayed
 });
 socket.on('ok', () => {
   console.log("OK received renderer"); // not displayed
 });
 socket.on('connect', () => {
-  console.log("connected renderer"); // displayed
-  socket.emit('test');
+  console.log("connected renderer xx"); // displayed
+//   socket.emit('test');
+
+  socket.emit("register", {
+						userid: 'userInfos.userid',
+						shopid: 'userInfos.shopid',
+						roleid: 'userInfos.roleid',
+						view: 'cashier'
+					});
 });
+// Lắng nghe sự kiện kết nối lại thành công
+socket.on('reconnect', (attemptNumber) => {
+    console.log('Reconnected on attempt:', attemptNumber);
+});
+socket.on('connect_error', (err) => {
+    console.log('Connect error:', err.message);
+});
+socket.on('disconnect', () => {
+    console.log('Disconnected from server');
+});
+socket.on('notify_bar', (data) => {
+  console.log("OK notify_bar", data); // not displayed
+});
+
+console.log('projectTableData', projectTableData)
+
+var socketUrl = window.location.protocol + "//" + window.location.host;
+// var socket = io(socketUrl, {
+// 					origins: "*",
+// 					transports: ["websocket"],
+// 				});
+console.log('socket', socket, socketUrl)
+// socket.on("connected", function () {
+// 					console.log("socket conectedddddddddddd")
+// 					socket.emit("register", {
+// 						userid: userInfos.userid,
+// 						shopid: userInfos.shopid,
+// 						roleid: userInfos.roleid,
+// 						view: 'cashier'
+// 					});
+
+// 					socket.emit("customEvent", {
+// 						name: "shopinfo",
+// 						shopInfo: shopInfo,
+// 						shopname: shopInfo.name_vn,
+// 						shopphone: shopInfo.phones,
+// 						shopaddress: shopInfo.addr,
+// 						username: userInfos.username,
+// 						partnerid: shopInfo.partnerid,
+// 						shopid: shopInfo.id,
+// 						svfee: shopInfo.svfee,
+// 					});
+
+// 					socket.emit("customEvent", {
+// 						name: "changeproduct",
+// 						data: $scope.list_product,
+// 						typeOrder: $scope.table,
+// 					});
+// });
+// socket.on("disconnect", (data) => {
+//     if (data == "io server disconnect") disconnect();
+// });
+
+// socket.emit('notify_bar', { shopid: shopInfo.id })
+
+// socket.emit("customEvent", {
+// 							name: "changeproduct",
+// 							data: $scope.list_product,
+// 							typeOrder: $scope.table,
+// 						});
+
 
 </script>
 <template>
@@ -41,8 +112,8 @@ socket.on('connect', () => {
                 <template v-slot:default>
                     <thead>
                         <tr>
-                            <th class="text-subtitle-1 font-weight-medium">Assigned</th>
-                            <th class="text-subtitle-1 font-weight-medium">Name</th>
+                            <th class="text-subtitle-1 font-weight-medium">UserName</th>
+                            <th class="text-subtitle-1 font-weight-medium">PC</th>
                             <th class="text-subtitle-1 font-weight-medium">Status</th>
                             <th class="text-subtitle-1 font-weight-medium">Time Onlines</th>
                         </tr>

@@ -16,8 +16,10 @@ const config: ConfigProps = {
     mini_sidebar: false,
     setHorizontalLayout: false, // Horizontal layout
     setRTLLayout: false, // RTL layout
-    actTheme: 'ORANGE_THEME',
-    inputBg: 'ORANGE_THEME',
+    // actTheme: 'ORANGE_THEME',
+    // inputBg: 'ORANGE_THEME',
+    actTheme:'DARK_PURPLE_THEME',
+    inputBg: 'DARK_PURPLE_THEME',
     boxed: false, // full screen content
     setBorderCard: false
 };
