@@ -20,9 +20,11 @@ export default defineConfig({
     // }
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@@': path.resolve(__dirname, './electron'),
     }
   },
   server: {
+    port: 5173,
     hmr: {
       overlay: false
     },

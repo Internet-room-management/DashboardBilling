@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "allowJs": true,
+    "types": ["vite/client"],
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "src/*",
+       ]
+    }
+  },
+  "include": ["electron/**/*","vite.config.*", "env.d.ts", "src/**/*.vue"],
+  "references": [{
+    "path": "./tsconfig.vite-config.json"
+  }]
+}

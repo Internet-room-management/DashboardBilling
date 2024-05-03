@@ -1,99 +1,36 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { projectTableData } from "@/_mockApis/components/dashboards/AnalyticalData";
-// import { socket, state  } from "@/socketIO";
+// import { projectTableData } from "@/_mockApis/components/dashboards/AnalyticalData";
+import img1 from '@/assets/images/profile/1.jpg';
+const { ipcRenderer } = require('electron');
 const select = ref("March");
 const items = ref(["March", "April", "May", "June"]);
-// console.log('socketIO', state.connecte)
+const projectTableData = ref([{}])
 
-import { io } from "socket.io-client";
-const socket = io(`http://localhost:18092`,{
-					
-					transports: ["websocket"],
-				});
+ipcRenderer.invoke('getTodos')
+        .then((todos: any) => {
+            // renderTodos(todos);sS
+            console.log('todos UI', todos)
+            projectTableData.value = todos
+        })
+        .catch((err: any) => console.error(err));
 
-socket.on('welcome', () => {
-  console.log('on welcome : welcome received renderer'); // displayed
-//   socket.emit('test')
-});
-socket.on('error', (e) => {
-  console.log('error', e); // not displayed
-});
-socket.on('ok', () => {
-  console.log("OK received renderer"); // not displayed
-});
-socket.on('connect', () => {
-  console.log("connected renderer xx"); // displayed
-//   socket.emit('test');
+// ipcRenderer.invoke('addTodo')
+// .then((todos: any) => {
+//     // renderTodos(todos);sS
+//     console.log('todos UI', todos)
+//     projectTableData.value = todos
+// })
+// .catch((err: any) => console.error(err));
 
-  socket.emit("register", {
-						userid: 'userInfos.userid',
-						shopid: 'userInfos.shopid',
-						roleid: 'userInfos.roleid',
-						view: 'cashier'
-					});
-});
-// Lắng nghe sự kiện kết nối lại thành công
-socket.on('reconnect', (attemptNumber) => {
-    console.log('Reconnected on attempt:', attemptNumber);
-});
-socket.on('connect_error', (err) => {
-    console.log('Connect error:', err.message);
-});
-socket.on('disconnect', () => {
-    console.log('Disconnected from server');
-});
-socket.on('notify_bar', (data) => {
-  console.log("OK notify_bar", data); // not displayed
-});
-
-console.log('projectTableData', projectTableData)
-
-var socketUrl = window.location.protocol + "//" + window.location.host;
-// var socket = io(socketUrl, {
-// 					origins: "*",
-// 					transports: ["websocket"],
-// 				});
-console.log('socket', socket, socketUrl)
-// socket.on("connected", function () {
-// 					console.log("socket conectedddddddddddd")
-// 					socket.emit("register", {
-// 						userid: userInfos.userid,
-// 						shopid: userInfos.shopid,
-// 						roleid: userInfos.roleid,
-// 						view: 'cashier'
-// 					});
-
-// 					socket.emit("customEvent", {
-// 						name: "shopinfo",
-// 						shopInfo: shopInfo,
-// 						shopname: shopInfo.name_vn,
-// 						shopphone: shopInfo.phones,
-// 						shopaddress: shopInfo.addr,
-// 						username: userInfos.username,
-// 						partnerid: shopInfo.partnerid,
-// 						shopid: shopInfo.id,
-// 						svfee: shopInfo.svfee,
-// 					});
-
-// 					socket.emit("customEvent", {
-// 						name: "changeproduct",
-// 						data: $scope.list_product,
-// 						typeOrder: $scope.table,
-// 					});
+// ipcRenderer.send('connectionClient');
+// // Bắt tin nhắn từ quá trình chính với tên sự kiện 'receive-data'
+// ipcRenderer.on('mainReply', (event: any, serializedData: any) => {
+//     projectTableData.value = JSON.parse(serializedData);
+//     // projectTableData = data
+//     // Xử lý dữ liệu nhận được
+//     console.log('Received data:', projectTableData.value);
 // });
-// socket.on("disconnect", (data) => {
-//     if (data == "io server disconnect") disconnect();
-// });
-
-// socket.emit('notify_bar', { shopid: shopInfo.id })
-
-// socket.emit("customEvent", {
-// 							name: "changeproduct",
-// 							data: $scope.list_product,
-// 							typeOrder: $scope.table,
-// 						});
-
 
 </script>
 <template>
@@ -112,41 +49,43 @@ console.log('socket', socket, socketUrl)
                 <template v-slot:default>
                     <thead>
                         <tr>
-                            <th class="text-subtitle-1 font-weight-medium">UserName</th>
-                            <th class="text-subtitle-1 font-weight-medium">PC</th>
+                            <th class="text-subtitle-1 font-weight-medium">PcID</th>
+                            <th class="text-subtitle-1 font-weight-medium">NamePC</th>
+                            <th class="text-subtitle-1 font-weight-medium">Network</th>
                             <th class="text-subtitle-1 font-weight-medium">Status</th>
                             <th class="text-subtitle-1 font-weight-medium">Time Onlines</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in projectTableData" :key="item.leadname" :class="item.activestate"
+                        <tr v-for="item in projectTableData" :key="item.PcID" :class="'active'"
                             class="month-item">
                             <td>
                                 <div class="d-flex align-center">
                                     <v-avatar size="40">
-                                        <img :src="item.img" alt="user" width="45" />
+                                        <img :src="img1" alt="user" width="45" />
                                     </v-avatar>
                                     <div class="mx-4">
                                         <h4 class="text-h6 text-no-wrap">
-                                            {{ item.leadname }}
+                                            {{ item.PcID }}
                                         </h4>
                                         <h6 class="text-subtitle-1 text-medium-emphasis text-no-wrap font-weight-medium mt-1">
-                                            {{ item.leademail }}
+                                            {{ item.NamePC }}
                                         </h6>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <h5 class="text-subtitle-1 text-medium-emphasis text-no-wrap font-weight-medium ">
-                                    {{ item.projectname }}
+                                    {{ item.NamePC }}
                                 </h5>
                             </td>
+                           
                             <td>
-                                <v-chip class="ma-2" :color="item.statuscolor" size="small" label>{{ item.statustext
-                                }}</v-chip>
+                                <h4 class="text-body-1 font-weight-semibold">{{ item.Network }}</h4>
                             </td>
                             <td>
-                                <h4 class="text-body-1 font-weight-semibold">{{ item.money }}</h4>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ 'low'
+                                }}</v-chip>
                             </td>
                         </tr>
                     </tbody>
