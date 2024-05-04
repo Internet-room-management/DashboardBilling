@@ -5,7 +5,7 @@ import img1 from '@/assets/images/profile/1.jpg';
 const { ipcRenderer } = require('electron');
 const select = ref("March");
 const items = ref(["March", "April", "May", "June"]);
-const projectTableData = ref([{}])
+const projectTableData = ref([])
 
 ipcRenderer.invoke('getAllPc')
         .then((todos: any) => {
@@ -41,9 +41,12 @@ ipcRenderer.on('response-dataMain', (event: any, data: any) => {
                         <tr>
                             <th class="text-subtitle-1 font-weight-medium">PcID</th>
                             <th class="text-subtitle-1 font-weight-medium">NamePC</th>
-                            <th class="text-subtitle-1 font-weight-medium">Network</th>
+                            
                             <th class="text-subtitle-1 font-weight-medium">Status</th>
                             <th class="text-subtitle-1 font-weight-medium">Time Onlines</th>
+                            <th class="text-subtitle-1 font-weight-medium">Time remaining</th>
+                            <th class="text-subtitle-1 font-weight-medium">Date</th>
+                            <th class="text-subtitle-1 font-weight-medium">Network</th>
                             <th class="text-subtitle-1 font-weight-medium">Hardware</th>
                         </tr>
                     </thead>
@@ -71,11 +74,27 @@ ipcRenderer.on('response-dataMain', (event: any, data: any) => {
                                 </h5>
                             </td>
                            
-                            <td>
-                                <h4 class="text-body-1 font-weight-semibold">{{ item.Network }}</h4>
-                            </td>
+                           
                             <td>
                                 <v-chip class="ma-2" :color="'low'" size="small" label>{{ item.Status }}</v-chip>
+                            </td>
+                            <td>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ '01:22' }}</v-chip>
+                            </td>
+                            <td>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ '11:22' }}</v-chip>
+                            </td>
+                            <td>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ '05-06-2024' }}</v-chip>
+                            </td>
+                            <td>
+                                <h4 class="text-subtitle-1 text-medium-emphasis text-no-wrap font-weight-medium">{{ item.Network.ipV4 }}</h4>
+                                <h4 class="text-subtitle-1 text-medium-emphasis text-no-wrap font-weight-medium">{{ item.Network.speed }} Mbp</h4>
+                            </td>
+                            <td>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ item.cpu }}</v-chip>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ item.vga[0].Model }}</v-chip>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>Ram: {{ item.ram.TotalRAM }}</v-chip>
                             </td>
                         </tr>
                     </tbody>

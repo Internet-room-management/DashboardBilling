@@ -57,7 +57,6 @@ import Client from '../shared/models/clientPC';
 
 export function createSocketIo(mainWindow: any) {
   let socketClient: any [] = [];
-  let Clients: Client[] = []; 
   // socket server
     // Khởi tạo mảng clients chứa các đối tượng clientpc
 
@@ -72,7 +71,7 @@ export function createSocketIo(mainWindow: any) {
     socket.on('register', async (dataPC:any) => {
   
       console.log(`REGISTER :${JSON.stringify(dataPC)}`, 'socket', clientIPv4);
-      const client = new Client(dataPC.PcID, dataPC.NamePC, dataPC.Network, socket.id)
+      const client = new Client(dataPC.PcID, dataPC.NamePC, dataPC.Network, socket.id, dataPC.storage, dataPC.vga, dataPC.network, dataPC.ram, dataPC.cpu)
       socketClient.push(socket)
 
       const data = await todoService.addClientPc(client);
@@ -82,7 +81,6 @@ export function createSocketIo(mainWindow: any) {
     });
     
     socket.on("reconnect", () => {
-      // ...
       console.log(`socket reconnection:${clientIPv4}`);
     });
 
