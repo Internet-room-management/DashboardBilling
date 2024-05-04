@@ -31,9 +31,9 @@ ipcRenderer.on('response-dataMain', (event: any, data: any) => {
                     <h2 class="text-h4">PC Manager</h2>
                 </div>
                 <v-spacer></v-spacer>
-                <div class="ml-auto">
+                <!-- <div class="ml-auto">
                     <v-select v-model="select" :items="items" variant="outlined" dense hide-details></v-select>
-                </div>
+                </div> -->
             </div>
             <v-table class="month-table mt-5 mb-0">
                 <template v-slot:default>
@@ -44,6 +44,7 @@ ipcRenderer.on('response-dataMain', (event: any, data: any) => {
                             <th class="text-subtitle-1 font-weight-medium">Network</th>
                             <th class="text-subtitle-1 font-weight-medium">Status</th>
                             <th class="text-subtitle-1 font-weight-medium">Time Onlines</th>
+                            <th class="text-subtitle-1 font-weight-medium">Hardware</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,8 +75,7 @@ ipcRenderer.on('response-dataMain', (event: any, data: any) => {
                                 <h4 class="text-body-1 font-weight-semibold">{{ item.Network }}</h4>
                             </td>
                             <td>
-                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ 'low'
-                                }}</v-chip>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ item.Status }}</v-chip>
                             </td>
                         </tr>
                     </tbody>

@@ -6,19 +6,32 @@ class Client {
     PcID: string;
     NamePC: string;
     Network: string;
-    socket: string;
+    Socket: string;
+    Status: string;
   
     // Constructor (phương thức khởi tạo) của lớp Student
-    constructor(PcID: string, NamePC: string, Network: string, socket: string) {
+    constructor(PcID: string, NamePC: string, Network: string, Socket: string) {
       this.PcID = PcID;
       this.NamePC = NamePC;
       this.Network = Network;
-      this.socket = socket
+      this.Socket = Socket;
+      this.Status = ''
     }
   
     // Phương thức của lớp Student
     displayInfo() {
-        console.log(`PcID: ${this.PcID}, NamePC: ${this.NamePC}, Network: ${this.Network}, socket: ${this.socket}`);
+        console.log(`PcID: ${this.PcID}, NamePC: ${this.NamePC}, Network: ${this.Network}, socket: ${this.Socket}`);
+    }
+    // Online PC
+    online (){
+      this.Status = 'Online'
+    }
+    // Offline PC
+    offline(){
+      this.Status = 'Offline'
+    }
+    disconnect(){
+      this.Status = 'Disconnect'
     }
   }
   export default Client;
