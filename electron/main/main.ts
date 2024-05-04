@@ -6,30 +6,9 @@ var {
     ipcMain,
     dialog
 } = require('electron');
-require('./socketio');
-import Client from '../shared/models/clientPC';
-// const todoService = require('../services/todoService');
-// Import and use ipcMain.ts
-// require('./ipcMain');
+import { createSocketIo } from './socketio';
 import { createIpcHandlers } from './ipcMain';
-let Clients: Client[] = []; 
 
-// ipcMain.handle('addTodo', (event, todo) => {
-//   return todoService.add(todo);
-// });
-
-// ipcMain.handle('getTodos', () => {
-//   return Promise.resolve(Clients);
-// });
-
-// ipcMain.on('connectionClient', (event) => {
-//   const serializedData = JSON.stringify(Clients);
-//   console.log('send ipcrenderer', serializedData)
-//   event.reply('mainReply', serializedData);
-// });
-
-// Đăng ký các handlers cho ipcMain
-//  registerHandlers();
 
 
 //////////////////////////////////////
@@ -97,6 +76,8 @@ function createWindow() {
 
      // Truyền mainWindow vào hàm createIpcHandlers
      createIpcHandlers(mainWindow);
+     // khởi tạo socketIo
+     createSocketIo(mainWindow)
   }
 
 // function createWindows () {

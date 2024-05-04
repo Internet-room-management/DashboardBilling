@@ -7,30 +7,20 @@ const select = ref("March");
 const items = ref(["March", "April", "May", "June"]);
 const projectTableData = ref([{}])
 
-ipcRenderer.invoke('getTodos')
+ipcRenderer.invoke('getAllPc')
         .then((todos: any) => {
-            // renderTodos(todos);sS
-            console.log('todos UI', todos)
+            console.log('Open Manager', todos)
             projectTableData.value = todos
         })
         .catch((err: any) => console.error(err));
 
-// ipcRenderer.invoke('addTodo')
-// .then((todos: any) => {
-//     // renderTodos(todos);sS
-//     console.log('todos UI', todos)
-//     projectTableData.value = todos
-// })
-// .catch((err: any) => console.error(err));
+ipcRenderer.on('response-dataMain', (event: any, data: any) => {
+    console.log('received', data)
+    projectTableData.value = JSON.parse(data);
+    // Xử lý dữ liệu nhận được
+    console.log('Received data:', projectTableData.value);
+});
 
-// ipcRenderer.send('connectionClient');
-// // Bắt tin nhắn từ quá trình chính với tên sự kiện 'receive-data'
-// ipcRenderer.on('mainReply', (event: any, serializedData: any) => {
-//     projectTableData.value = JSON.parse(serializedData);
-//     // projectTableData = data
-//     // Xử lý dữ liệu nhận được
-//     console.log('Received data:', projectTableData.value);
-// });
 
 </script>
 <template>

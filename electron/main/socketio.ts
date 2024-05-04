@@ -49,35 +49,35 @@
 //     // Thêm các phương thức khác tùy thuộc vào nhu cầu của bạn
 // }
 //////////////////////////////////////////////
+
+const { BrowserWindow, ipcMain } = require('electron');
 const todoService = require('../services/todoService');
 const io = require('socket.io')();
 import Client from '../shared/models/clientPC';
-let socketClient: any [] = [];
-let Clients: Client[] = []; 
-// socket server
-  // Khởi tạo mảng clients chứa các đối tượng clientpc
 
-//@ts-ignore
-io.on('connection', (socket) => {
+export function createSocketIo(mainWindow: any) {
+  let socketClient: any [] = [];
+  let Clients: Client[] = []; 
+  // socket server
+    // Khởi tạo mảng clients chứa các đối tượng clientpc
+
+  //@ts-ignore
+  io.on('connection', (socket) => {
 
     const clientIP = socket.handshake.address; // Lấy địa chỉ IP của client
     // Lọc ra địa chỉ IPv4  
     const clientIPv4 = clientIP.includes(':') ? clientIP.split(':').pop() : clientIP;       
     console.log(`socket connection:${clientIPv4}`);
   
-    socket.on('register', (data:any) => {
+    socket.on('register', async (dataPC:any) => {
   
-      console.log(`REGISTER :${JSON.stringify(data)}`, 'socket', clientIPv4);
-      const client = new Client(data.PcID, data.NamePC, data.Network, socket.id)
+      console.log(`REGISTER :${JSON.stringify(dataPC)}`, 'socket', clientIPv4);
+      const client = new Client(dataPC.PcID, dataPC.NamePC, dataPC.Network, socket.id)
       socketClient.push(socket)
 
-      todoService.addClientPc(client);
-    //   Clients.push(client);
-     
-      socket.emit('welcome');
-    //   Clients[0].displayInfo()
-  
-     
+      const data = await todoService.addClientPc(client);
+      console.log('respone', JSON.stringify(data))
+      mainWindow.webContents.send('response-dataMain', JSON.stringify(data));  
   
     });
     
@@ -86,9 +86,12 @@ io.on('connection', (socket) => {
       console.log(`socket reconnection:${clientIPv4}`);
     });
 
-    socket.on('disconnect', () => {
-        // console.log('disconnect', socket.id, clientIPv4)
-        todoService.delClientPc(socket);
+    socket.on('disconnect', async () => {
+        console.log('disconnect', socket.id, clientIPv4)
+        const data = await todoService.delClientPc(socket);
+        console.log('respone', JSON.stringify(data))
+        // Sử dụng mainWindow ở đây
+        mainWindow.webContents.send('response-dataMain', JSON.stringify(data));
     });
   
   });
@@ -101,6 +104,9 @@ io.on('connection', (socket) => {
   // io.listen(18092, ip, function() {
   //     console.log('listening on localhost:18092');
   // })
+
+
+}
 ///////////////////////////////////////////////
 // console.log('socketIO', state.connecte)
 // import { io } from "socket.io-client";

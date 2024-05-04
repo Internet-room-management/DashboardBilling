@@ -28,15 +28,15 @@ const todoService = require('../services/todoService');
 
 // Hàm tạo các xử lý IPC
 export function createIpcHandlers(mainWindow: any) {
-    ipcMain.on('some-event', (event, args) => {
-        // Sử dụng mainWindow ở đây
-        mainWindow.webContents.send('response-event', 'Hello from main process!');
-    });
+    // ipcMain.on('some-event', (event, args) => {
+    //     // Sử dụng mainWindow ở đây
+    //     mainWindow.webContents.send('response-event', 'Hello from main process!');
+    // });
     ipcMain.handle('addTodo', (event, todo) => {
         return todoService.add(todo);
     });
     
-    ipcMain.handle('getTodos', () => {
+    ipcMain.handle('getAllPc', () => {
         return todoService.getAll();
     });
 }
