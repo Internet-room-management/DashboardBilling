@@ -85,7 +85,7 @@ ipcRenderer.on('response-dataMain', (event: any, data: any) => {
                                 <v-chip class="ma-2" :color="'low'" size="small" label>{{ '11:22' }}</v-chip>
                             </td>
                             <td>
-                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ '05-06-2024' }}</v-chip>
+                                <v-chip class="ma-2" :color="'low'" size="small" label>{{ Date.now() }}</v-chip>
                             </td>
                             <td>
                                 <h4 class="text-subtitle-1 text-medium-emphasis text-no-wrap font-weight-medium">{{ item.Network.ipV4 }}</h4>

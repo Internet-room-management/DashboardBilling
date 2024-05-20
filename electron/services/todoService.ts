@@ -6,16 +6,17 @@ const todos:any[] = [];
 let Clients: any[] = [];
 
 function addClientPc(client:any) {
-    const isObjectInArray = Clients.some(item => item.NamePC === client.NamePC);
+    const isObjectInArray = Clients.some(item => item.Network.IPv4 === client.Network.IPv4);
 
-    console.log(isObjectInArray); // Kết quả: true
+    console.log(isObjectInArray, client); // Kết quả: true
     if (isObjectInArray){
         Clients.forEach(function(item, index) {
-            if (item.Network == client.Network){
+            if (item.Network.IPv4 === client.Network.IPv4){
                 item.offline()
                 item.Socket = client.Socket
             }
         })
+        console.log('new array', Clients)
         return Promise.resolve(Clients);
     }
     client.offline()

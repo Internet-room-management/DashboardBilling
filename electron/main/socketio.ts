@@ -77,7 +77,7 @@ export function createSocketIo(mainWindow: any) {
       const data = await todoService.addClientPc(client);
       console.log('respone', JSON.stringify(data))
       mainWindow.webContents.send('response-dataMain', JSON.stringify(data));  
-  
+      socket.emit('welcome')
     });
     
     socket.on("reconnect", () => {
